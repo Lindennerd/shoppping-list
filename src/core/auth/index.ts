@@ -1,14 +1,12 @@
-import { atom, useAtom } from "jotai";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { pocketbase } from "../pocketbase";
 import { Login, RegisterModel, User } from "./user";
 
 export * from "./user";
 
-const authAtom = atom<User | null>(null);
-
 export const useAuth = () => {
-  const [auth, setAuth] = useAtom(authAtom);
+  const navigate = useNavigate();
   return {
     register: async (user: RegisterModel) => {
       try {
@@ -31,18 +29,19 @@ export const useAuth = () => {
     },
     login: async (user: Login) => {
       try {
-        const authResponse = await pocketbase
+        await pocketbase
           .collection("users")
           .authWithPassword(user.email, user.password);
-        setAuth(authResponse.record as unknown as User);
+        navigate("/");
       } catch (error) {
         toast("An error occurred", { type: "error" });
       }
     },
     logout: () => {
       pocketbase.authStore.clear();
+      navigate("/login");
     },
-    auth: auth,
+    auth: pocketbase.authStore.model as unknown as User,
     isLogged: pocketbase.authStore.isValid,
   };
 };
