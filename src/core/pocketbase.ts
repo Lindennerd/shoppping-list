@@ -1,4 +1,4 @@
-import PocketBase from "pocketbase";
+import PocketBase, { ListResult } from "pocketbase";
 import { Market, Product } from "./entities";
 import { Shopping } from "./entities/shopping";
 
@@ -18,3 +18,11 @@ export const collections = {
   productMarket: pocketbase.collection("productMarket"),
   shopping: pocketbase.collection<Shopping>("shopping"),
 };
+
+export const getEmptyListResult = <T>(): ListResult<T> => ({
+  page: 1,
+  perPage: 100,
+  totalPages: 0,
+  totalItems: 0,
+  items: [],
+});

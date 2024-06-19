@@ -1,4 +1,3 @@
-//vertical navbar using tailwindcss
 export const Navbar = () => {
   return (
     <nav className="bg-gray-800 w-1/6 h-screen">
@@ -7,7 +6,7 @@ export const Navbar = () => {
           <a href="/">Home</a>
         </li>
         <li className="p-4 text-white">
-          <a href="/about">About</a>
+          <a href="/shopping/list/new">Nova Lista</a>
         </li>
         <li className="p-4 text-white">
           <a href="/contact">Contact</a>
